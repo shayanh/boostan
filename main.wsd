@@ -1,15 +1,91 @@
 @startuml boostan
 
 class Person {
-    String firstName
-    String lastName
-    String ssn
+    firstName: String
+    lastName: String
+    ssn: String
 }
 
 class Student {
-    String studentID
+    studentID: String
 }
 
-Student "*" --> "1" Person
+class Professor {
+    employeeID: String
+}
+
+Student "*" -- "1" Person
+Professor "*" -- "1" Person
+
+class Major {
+    name: String
+}
+
+Student "*" -- "1" Major
+
+class Degree {
+    name: String
+}
+
+Major "*" -- "1" Degree 
+
+class Curriculum {
+    entranceYear: Integer
+}
+
+Major "1" -- "1" Curriculum
+
+class Course {
+    name: String
+}
+
+class CourseOffering {
+}
+
+class Semester {
+    // TODO
+}
+
+CourseOffering "*" -- "*" Professor
+CourseOffering "*" -- "1" Course
+CourseOffering "*" -- "1" Semester
+
+class CurriculumCourse {
+}
+
+CurriculumCourse "1" -- "*" Credit
+CurriculumCourse "1" -- "1" Course
+
+class Credit {
+    credit: Integer
+    type: CreditType
+}
+
+enum CreditType {
+    THEORY
+    PRACTICE
+}
+
+abstract class Prerequisite {
+    // TODO
+}
+
+Prerequisite "*" -- "1" Curriculum
+Prerequisite "*" -- "1" Course
+
+Prerequisite <|-- CoursePrerequisite 
+class CoursePrerequisite {
+}
+CoursePrerequisite "*" -- "1" Course
+
+Prerequisite <|-- CourseCorequisite 
+class CourseCorequisite {
+} 
+CourseCorequisite "*" -- "1" Course
+
+Prerequisite <|-- MinCreditPrerequisite 
+class MinCreditPrerequisite {
+    minCredit: Integer
+} 
 
 @enduml
