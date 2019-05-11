@@ -1,2 +1,15 @@
 @startuml boostan
+
+class Person {
+    String firstName
+    String lastName
+    String ssn
+}
+
+class Student {
+    String studentID
+}
+
+Student "*" --> "1" Person
+
 @enduml
