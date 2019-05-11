@@ -33,17 +33,20 @@ class Curriculum {
     entranceYear: Integer
 }
 
-Major "1" -- "1" Curriculum
+Major "1" -- "*" Curriculum
 
 class Course {
     name: String
 }
 
 class CourseOffering {
+    isOutOfUniversity: Boolean
 }
 
 class Semester {
-    // TODO
+    registerationPeriod: TimeSpan
+    editingPeriod: TimeSpan
+    eliminationPerion: TimeSpan
 }
 
 CourseOffering "*" -- "*" Professor
@@ -68,6 +71,7 @@ class CurriculumBox {
     passingStrategy: CurriculumBoxPassingStrategy
 }
 
+CurriculumBox "*" -- "1" Curriculum
 CurriculumRow "*" -- "1" CurriculumBox
 
 abstract class CurriculumRow {
@@ -117,6 +121,85 @@ CourseCorequisite "*" -- "1" Course
 Prerequisite <|-- MinCreditPrerequisite 
 class MinCreditPrerequisite {
     minCredit: Integer
-} 
+}
+
+class Enrollment {
+    grade: Integer
+    state: EnrollmentState
+    verifyGrade()
+    finalizeGrade()
+    eliminate()
+}
+
+enum EnrollmentState {
+    PASSED
+    FAILED
+    GRADE_VERIFIED
+    GRADE_NOT_VERIFIED
+    NOT_GRADED
+    W_ELIMINATED
+    X_ELIMINATED
+}
+
+Enrollment "*" -- "1" CourseOffering
+Enrollment "*" -- "1" CurriculumRow
+Enrollment "*" -- "1" StudentSemester
+
+class StudentSemester {
+    registerStartTime: Date
+    editingStartTime: Date
+    submit()
+    finalize()
+}
+StudentSemester "*" -- "1" Semester
+StudentSemester "*" -- "1" Student
+StudentSemester "1" -- "1" RegistrationValidationStrategy
+StudentSemester "1" -- "1" EliminationMinCreditStrategy
+
+class TimeSpan {
+    start: Date
+    end: Date
+}
+
+class SemesterTranscript {
+}
+SemesterTranscript "1" -- "1" StudentSemester
+
+class Transcript {
+}
+Transcript "1" -- "1" Student
+
+class EnrollmentPermission {
+    type: EnrollmentPermissionType
+}
+EnrollmentPermission "*" -- "1" CourseOffering
+EnrollmentPermission "*" -- "1" StudentSemester
+
+enum EnrollmentPermissionType {
+    // TODO
+}
+
+class RegistrationValidationStrategy {
+}
+
+RegistrationValidationStrategy <|-- BachelorRegistrationStrategy
+class BachelorRegistrationStrategy {
+}
+
+RegistrationValidationStrategy <|-- MasterRegistrationStrategy
+class MasterRegistrationStrategy {
+}
+
+RegistrationValidationStrategy <|-- PhDRegistrationStrategy
+class PhDRegistrationStrategy {
+}
+
+interface EliminationMinCreditStrategy {
+    getMinCredit()
+}
+EliminationMinCreditStrategy <|-- BachelorEliminationMinCreditStrategy
+EliminationMinCreditStrategy <|-- BachelorShahedEliminationMinCreditStrategy
+EliminationMinCreditStrategy <|-- MasterEliminationMinCreditStrategy
+EliminationMinCreditStrategy <|-- PhDEliminationMinCreditStrategy
 
 @enduml
