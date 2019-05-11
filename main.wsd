@@ -50,11 +50,42 @@ CourseOffering "*" -- "*" Professor
 CourseOffering "*" -- "1" Course
 CourseOffering "*" -- "1" Semester
 
-class CurriculumCourse {
+interface CurriculumBoxPassingStrategy {
+
 }
 
-CurriculumCourse "1" -- "*" Credit
-CurriculumCourse "1" -- "1" Course
+CurriculumBoxPassingStrategy <|.. PassAll
+class PassAll {
+
+}
+
+CurriculumBoxPassingStrategy <|.. PassSomeCredits
+class PassSomeCredits {
+    minCredits: Integer
+}
+
+class CurriculumBox {
+    passingStrategy: CurriculumBoxPassingStrategy
+}
+
+CurriculumRow "*" -- "1" CurriculumBox
+
+abstract class CurriculumRow {
+    isPassed()
+}
+
+CurriculumRow "1" -- "*" Credit
+
+CurriculumRow <|-- SpecificCourse
+class SpecificCourse {
+}
+
+SpecificCourse "1" -- "1" Course
+
+CurriculumRow <|-- AnyCourse
+class AnyCourse {
+
+}
 
 class Credit {
     credit: Integer
