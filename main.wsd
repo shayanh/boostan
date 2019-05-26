@@ -1,37 +1,38 @@
 @startuml boostan
 
-class Person {
+class Person << entity >> {
     firstName: String
     lastName: String
     ssn: String
 }
 
-class Student {
+class Student << entity >> {
     studentID: String
 }
 Student "*" -- "1" Person
 Student "*" -- "1" Major
+Student "*" -- "1" Curriculum
 
-class Professor {
+class Professor << entity >> {
     employeeID: String
 }
 Professor "*" -- "1" Person
 
-class Major {
+class Major << entity >> {
     name: String
 }
 Major "*" -- "1" Degree
 Major "1" -- "*" Curriculum
 
-class Degree {
+class Degree << entity >> {
     name: String
 }
 
-class Curriculum {
-    entranceYear: Integer
+class Curriculum << entity >> {
 }
+Curriculum "1" -- "*" Semester
 
-class Course {
+class Course << entity >> {
     name: String
 }
 
@@ -45,25 +46,25 @@ enum DayOfWeek {
     FRI
 }
 
-class Faculty {
+class Faculty << entity >> {
     name: String
 }
 Faculty "1" -- "*" Major
 
-class Session {
-    day: DayOfWeek
-    startHour: Time
-    endHour: Time
-    classNo: Integer
+class Session << value object >> {
+    dayOfWeek: DayOfWeek
+    timePeriod: TimePeriod
+    place: String
 }
 
-class ExamSession {
-    period: TimeSpan
-    classNo: Integer
+class ExamSession << value object >> {
+    date: Date
+    timePeriod: TimePeriod
+    place: String
 }
 
-class CourseOffering {
-    isOutOfUniversity: Boolean
+class CourseOffering << entity >> {
+    offeredOutside: Boolean
     capacity: Integer
 }
 
@@ -74,10 +75,18 @@ CourseOffering "*" -- "*" Professor
 CourseOffering "*" -- "1" Course
 CourseOffering "*" -- "1" Semester
 
-class Semester {
+class Semester << entity >> {
     registerationPeriod: TimeSpan
     editingPeriod: TimeSpan
     eliminationPeriod: TimeSpan
+    year: int
+    time: SemesterTime
+}
+
+enum SemesterTime {
+    FALL,
+    SPRING,
+    SUMMER    
 }
 
 interface CurriculumBoxPassingStrategy {
@@ -99,7 +108,7 @@ class CurriculumBox {
 CurriculumBox "*" -- "1" Curriculum
 CurriculumRow "*" -- "1" CurriculumBox
 
-abstract class CurriculumRow {
+abstract class CurriculumRow << value object >> {
     isPassed()
 }
 
@@ -115,7 +124,7 @@ CurriculumRow <|-- AnyCourse
 class AnyCourse {
 }
 
-class Credit {
+class Credit << value object >> {
     credit: Integer
     type: CreditType
 }
@@ -125,7 +134,7 @@ enum CreditType {
     PRACTICE
 }
 
-abstract class Prerequisite {
+abstract class Prerequisite << entity >> {
 }
 
 Prerequisite "*" -- "1" Curriculum
@@ -180,9 +189,14 @@ StudentSemester "*" -- "1" Student
 StudentSemester "1" -- "1" RegistrationValidationStrategy
 StudentSemester "1" -- "1" EliminationMinCreditStrategy
 
-class TimeSpan {
+class TimePeriod {
+    start: Time
+    finish: Time
+}
+
+class DateTimePeriod {
     start: Date
-    end: Date
+    finish: Date
 }
 
 class SemesterTranscript {

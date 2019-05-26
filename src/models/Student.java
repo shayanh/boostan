@@ -7,6 +7,7 @@ public class Student extends Entity {
     private Person person;
     private Major major;
     private ArrayList<StudentSemester> studentSemesters;
+    private Curriculum curriculum;
 
     Student(int id) {
         super(id);
