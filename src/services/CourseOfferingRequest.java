@@ -3,8 +3,8 @@ package services;
 import models.CourseOffering;
 
 public class CourseOfferingRequest {
-    CourseOffering courseOffering;
-    CourseOfferingAction action;
+    private CourseOffering courseOffering;
+    private CourseOfferingAction action;
 
     public CourseOffering getCourseOffering() {
         return courseOffering;

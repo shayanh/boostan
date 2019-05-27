@@ -1,5 +1,6 @@
 package models;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
 public class CourseOffering extends Entity {
@@ -10,8 +11,10 @@ public class CourseOffering extends Entity {
     private ArrayList<Session> sessions;
     private ArrayList<Professor> lecturers;
     private Course course;
-    ArrayList<Enrollment> enrollments;
+    private ArrayList<Enrollment> enrollments = new ArrayList<>();
     private Semester semester;
+    private ArrayList<Student> waitingList = new ArrayList<>();
+    private static int WAITING_LIST_CAPACITY = 10;
 
     public Course getCourse() {
         return course;
@@ -33,7 +36,33 @@ public class CourseOffering extends Entity {
         enrollments.add(enrollment);
     }
 
-    public void removeEnrollment(Enrollment enrollment) {
+    public void removeEnrollment(Enrollment enrollment) throws InvalidObjectException {
         enrollments.remove(enrollment);
+        if (!waitingList.isEmpty()) {
+            Student student = waitingList.get(0);
+            waitingList.remove(0);
+            student.enroll(this);
+        }
+    }
+
+    public void addToWaitingList(Student newStudent) {
+        waitingList.add(newStudent);
+    }
+
+    public void removeFromWaitingList(Student student) {
+        waitingList.remove(student);
+    }
+
+    public boolean hasWaitingListCapacity() {
+        return waitingList.size() < WAITING_LIST_CAPACITY;
+    }
+
+    public boolean isInWaitingList(Student newStudent) {
+        for (Student student: waitingList) {
+            if (student.equals(newStudent)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

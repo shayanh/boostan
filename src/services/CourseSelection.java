@@ -32,17 +32,23 @@ public class CourseSelection {
     public boolean selectOfferings(Student student, ArrayList<CourseOfferingRequest> requests) {
         StudentSemester studentSemester = student.getCurrentSemester();
         RegistrationValidation registrationValidation = studentSemester.getRegistrationValidation();
-        ArrayList<CourseOffering> offerings = new ArrayList<>();
+
+        ArrayList<CourseOffering> enrollOfferings = new ArrayList<>();
+        ArrayList<CourseOffering> waitingOfferings = new ArrayList<>();
         for (CourseOfferingRequest request: requests) {
-            if (request.action == CourseOfferingAction.ENROLL || request.action == CourseOfferingAction.NONE) {
-                offerings.add(request.getCourseOffering());
+            if (request.getAction() == CourseOfferingAction.ENROLL || request.getAction() == CourseOfferingAction.NONE) {
+                enrollOfferings.add(request.getCourseOffering());
+            }
+            if (request.getAction() == CourseOfferingAction.WAITING) {
+                waitingOfferings.add(request.getCourseOffering());
             }
         }
-        boolean isValid = registrationValidation.validate(offerings);
+        boolean isValid = registrationValidation.validate(enrollOfferings, waitingOfferings);
         if (!isValid) {
             System.out.println(registrationValidation.getErrorMessage());
             return false;
         }
+
         for (CourseOfferingRequest request: requests) {
             CourseOffering offering = request.getCourseOffering();
             if (request.getAction() == CourseOfferingAction.DELETE) {

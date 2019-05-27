@@ -5,16 +5,21 @@ import java.util.ArrayList;
 public abstract class RegistrationValidation {
     protected Student student;
     protected ArrayList<CourseOffering> offerings;
+    protected ArrayList<CourseOffering> waitingOfferings;
+    protected ArrayList<CourseOffering> enrollOfferings;
     protected String errorMessage;
 
     public RegistrationValidation(Student student) {
         this.student = student;
     }
 
-    public boolean validate(ArrayList<CourseOffering> offerings) {
-        this.offerings = offerings;
+    public boolean validate(ArrayList<CourseOffering> enrollOfferings, ArrayList<CourseOffering> waitingOfferings) {
+        this.offerings = new ArrayList<>();
+        offerings.addAll(enrollOfferings);
+        offerings.addAll(waitingOfferings);
+
         return checkCapacity() && checkPrerequisites() && checkTimeOverlap()
-                && checkDuplicateCourse() && checkInternship() && checkMinMaxCredit();
+                && checkDuplicateCourse() && checkInternship() && checkMinMaxCredit() && checkWaitingList();
     }
 
     protected int getOfferingCreditSum() throws IllegalArgumentException {
@@ -29,7 +34,7 @@ public abstract class RegistrationValidation {
     }
 
     protected boolean checkCapacity() {
-        for (CourseOffering offering : offerings) {
+        for (CourseOffering offering : enrollOfferings) {
             if (!offering.hasCapacity()) {
                 errorMessage = "capacity exceeded";
                 return false;
@@ -90,6 +95,16 @@ public abstract class RegistrationValidation {
 
         if (hasInternship) {
             return offerings.size() == 1;
+        }
+        return true;
+    }
+
+    protected boolean checkWaitingList() {
+        for (CourseOffering offering: waitingOfferings) {
+            if (!offering.hasWaitingListCapacity() || offering.isInWaitingList(student)) {
+                errorMessage = "error in adding to waiting list";
+                return false;
+            }
         }
         return true;
     }

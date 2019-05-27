@@ -68,10 +68,9 @@ public class Student extends Entity {
         Enrollment enrollment = studentSemester.getEnrollment(offering);
         RepositoryContainer.studentRepository.removeEnrollment(studentSemester, enrollment);
         RepositoryContainer.semesterRepository.removeEnrollment(offering, enrollment);
-        // TODO
     }
 
     public void addToWaitingList(CourseOffering offering) {
-        // TODO
+        offering.addToWaitingList(this);
     }
 }
