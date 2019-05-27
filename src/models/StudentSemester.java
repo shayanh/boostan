@@ -11,9 +11,12 @@ public class StudentSemester extends Entity {
     private Semester semester;
     private SemesterState semesterState;
     private RegistrationValidation registrationValidation;
+    private EliminationValidation eliminationValidation;
+    private boolean wEliminated;
 
     public StudentSemester(int id) {
         super(id);
+        wEliminated = false;
     }
 
     public Semester getSemester() {
@@ -81,5 +84,13 @@ public class StudentSemester extends Entity {
             }
         }
         throw new InvalidObjectException("There no such enrollment with specified offering");
+    }
+
+    public boolean iswEliminated() {
+        return wEliminated;
+    }
+
+    public EliminationValidation getEliminationValidation() {
+        return eliminationValidation;
     }
 }

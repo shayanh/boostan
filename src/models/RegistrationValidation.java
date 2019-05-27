@@ -22,11 +22,11 @@ public abstract class RegistrationValidation {
                 && checkDuplicateCourse() && checkInternship() && checkMinMaxCredit() && checkWaitingList();
     }
 
-    protected int getOfferingCreditSum() throws IllegalArgumentException {
+    protected int getOfferingsCreditSum() throws IllegalArgumentException {
         int credits = 0;
+        Curriculum curriculum = student.getCurriculum();
         for (CourseOffering offering : offerings) {
             Course course = offering.getCourse();
-            Curriculum curriculum = student.getCurriculum();
             CurriculumRow row = curriculum.getCorrespondingRow(course);
             credits += row.getCreditsSum();
         }

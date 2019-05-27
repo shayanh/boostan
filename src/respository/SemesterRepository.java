@@ -4,6 +4,8 @@ import models.CourseOffering;
 import models.Enrollment;
 import models.Semester;
 
+import java.io.InvalidObjectException;
+
 public class SemesterRepository extends Repository<Semester> {
     Repository<CourseOffering> courseOfferings;
 
@@ -25,7 +27,7 @@ public class SemesterRepository extends Repository<Semester> {
         offering.addEnrollment(enrollment);
     }
 
-    public void removeEnrollment(CourseOffering offering, Enrollment enrollment) {
+    public void removeEnrollment(CourseOffering offering, Enrollment enrollment) throws InvalidObjectException {
         offering.removeEnrollment(enrollment);
     }
 }

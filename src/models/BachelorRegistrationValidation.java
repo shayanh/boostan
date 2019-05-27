@@ -10,7 +10,7 @@ public class BachelorRegistrationValidation extends RegistrationValidation {
     @Override
     boolean checkMinMaxCredit() {
         try {
-            int credits = getOfferingCreditSum();
+            int credits = getOfferingsCreditSum();
             StudentSemester studentSemester = student.getLastFinishedSemester();
             float previousGPA = studentSemester.getGPA();
             if (previousGPA >= GPA_THRESHOLD)

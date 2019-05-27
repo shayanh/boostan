@@ -6,10 +6,10 @@ import respository.SemesterRepository;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
-public class CourseSelection {
+public class CourseSelectionService {
     private SemesterRepository semesterRepository;
 
-    CourseSelection() {
+    CourseSelectionService() {
         semesterRepository = new SemesterRepository();
     }
 
@@ -68,6 +68,30 @@ public class CourseSelection {
             if (request.getAction() == CourseOfferingAction.WAITING) {
                 student.addToWaitingList(offering);
             }
+        }
+        return true;
+    }
+
+    public boolean wEliminate(Student student, Enrollment enrollment) {
+        StudentSemester studentSemester = student.getCurrentSemester();
+        EliminationValidation eliminationValidation = studentSemester.getEliminationValidation();
+
+        if (studentSemester.iswEliminated()) {
+            return false;
+        }
+        ArrayList<Enrollment> tempEnrollments = studentSemester.getEnrollments();
+        tempEnrollments.remove(enrollment);
+
+        if (!eliminationValidation.validate(tempEnrollments)) {
+            System.out.println(eliminationValidation.getErrorMessage());
+            return false;
+        }
+
+        try {
+            student.unenroll(enrollment.getCourseOffering());
+        } catch (InvalidObjectException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
         return true;
     }
