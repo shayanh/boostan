@@ -86,7 +86,7 @@ class Semester << entity >> {
 enum SemesterTime {
     FALL,
     SPRING,
-    SUMMER    
+    SUMMER
 }
 
 interface CurriculumBoxPassingStrategy {
@@ -134,7 +134,7 @@ enum CreditType {
     PRACTICE
 }
 
-abstract class Prerequisite << entity >> {
+abstract class Prerequisite << value object >> {
 }
 
 Prerequisite "*" -- "1" Curriculum
@@ -156,7 +156,7 @@ class MinCreditPrerequisite {
     minCredit: Integer
 }
 
-class Enrollment {
+class Enrollment << entity >> {
     grade: Integer
     state: EnrollmentState
     verifyGrade()
@@ -178,7 +178,7 @@ Enrollment "*" -- "1" CourseOffering
 Enrollment "*" -- "1" CurriculumRow
 Enrollment "*" -- "1" StudentSemester
 
-class StudentSemester {
+class StudentSemester << entity >> {
     registerStartTime: Date
     editingStartTime: Date
     submit()
@@ -189,25 +189,25 @@ StudentSemester "*" -- "1" Student
 StudentSemester "1" -- "1" RegistrationValidationStrategy
 StudentSemester "1" -- "1" EliminationMinCreditStrategy
 
-class TimePeriod {
+class TimePeriod << value object >> {
     start: Time
     finish: Time
 }
 
-class DateTimePeriod {
+class DateTimePeriod << value object >> {
     start: Date
     finish: Date
 }
 
-class SemesterTranscript {
+class SemesterTranscript << entity >> {
 }
 SemesterTranscript "1" -- "1" StudentSemester
 
-class Transcript {
+class Transcript << entity >> {
 }
 Transcript "1" -- "1" Student
 
-class EnrollmentPermission {
+class EnrollmentPermission << entity >> {
     type: EnrollmentPermissionType
 }
 EnrollmentPermission "*" -- "1" CourseOffering
