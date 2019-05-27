@@ -15,4 +15,17 @@ public class CurriculumBox {
         }
         return false;
     }
+
+    CurriculumRow getCorrespondingRow(Course course) {
+        for (CurriculumRow row: rows) {
+            if (row instanceof SpecificCourse &&
+                ((SpecificCourse) row).getCourse().equals(course))
+                return row;
+        }
+        for (CurriculumRow row: rows) {
+            if (row instanceof AnyCourse)
+                return row;
+        }
+        return null;
+    }
 }

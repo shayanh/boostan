@@ -10,6 +10,10 @@ public class Enrollment extends Entity {
         super(id);
     }
 
+    public int getGrade() {
+        return grade;
+    }
+
     public CourseOffering getCourseOffering() {
         return courseOffering;
     }

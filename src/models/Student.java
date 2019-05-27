@@ -26,6 +26,15 @@ public class Student extends Entity {
         return curriculum;
     }
 
+    public StudentSemester getLastFinishedSemester() {
+        StudentSemester result = null;
+        for (StudentSemester studentSemester: studentSemesters) {
+            if (studentSemester.getSemester().isFinished())
+                result = studentSemester;
+        }
+        return result;
+    }
+
     public int getPassedCredits() {
         int result = 0;
         for (StudentSemester studentSemester: studentSemesters) {

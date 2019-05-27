@@ -16,4 +16,16 @@ public class CourseOffering {
     public Course getCourse() {
         return course;
     }
+
+    public boolean hasCapacity() {
+        return enrollments.size() < capacity;
+    }
+
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public ArrayList<ExamSession> getExamSessions() {
+        return examSessions;
+    }
 }

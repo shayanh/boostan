@@ -21,6 +21,15 @@ public class Curriculum extends Entity {
         return false;
     }
 
+    public CurriculumRow getCorrespondingRow(Course course) throws IllegalArgumentException{
+        for (CurriculumBox box: boxes) {
+            CurriculumRow row = box.getCorrespondingRow(course);
+            if (row != null)
+                return row;
+        }
+        throw new IllegalArgumentException("Course not Found in Curriculum");
+    }
+
     public boolean isPrerequisiteSatisfied(Student student, Course course) {
         for (Prerequisite prerequisite: prerequisites) {
             if (prerequisite.getTargetCourse().equals(course) && !prerequisite.isSatisfied(student)) {
