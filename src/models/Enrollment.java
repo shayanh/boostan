@@ -9,4 +9,16 @@ public class Enrollment extends Entity {
     public Enrollment(int id) {
         super(id);
     }
+
+    public CourseOffering getCourseOffering() {
+        return courseOffering;
+    }
+
+    public EnrollmentState getState() {
+        return state;
+    }
+
+    public CurriculumRow getCurriculumRow() {
+        return curriculumRow;
+    }
 }

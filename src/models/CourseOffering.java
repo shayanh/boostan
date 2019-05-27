@@ -10,4 +10,10 @@ public class CourseOffering {
     private ArrayList<Session> sessions;
     private ArrayList<Professor> lecturers;
     private Course course;
+    ArrayList<Enrollment> enrollments;
+    private Semester semester;
+
+    public Course getCourse() {
+        return course;
+    }
 }
