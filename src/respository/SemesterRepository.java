@@ -7,7 +7,7 @@ import models.Semester;
 import java.io.InvalidObjectException;
 
 public class SemesterRepository extends Repository<Semester> {
-    Repository<CourseOffering> courseOfferings;
+    private Repository<CourseOffering> courseOfferings;
 
     public SemesterRepository() {
         super();
