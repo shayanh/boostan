@@ -1,7 +1,5 @@
 package models;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 
 public class Curriculum extends Entity {
@@ -15,7 +13,12 @@ public class Curriculum extends Entity {
     }
 
     public boolean hasCourse(Course course) {
-        throw new NotImplementedException(); // TODO
+        for (CurriculumBox box: boxes) {
+            if (box.hasCourse(course)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isPrerequisiteSatisfied(Student student, Course course) {
