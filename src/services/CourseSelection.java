@@ -3,6 +3,7 @@ package services;
 import models.*;
 import respository.SemesterRepository;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
 public class CourseSelection {
@@ -28,7 +29,40 @@ public class CourseSelection {
         return result;
     }
 
-    public boolean selectOfferings(Student student, ArrayList<CourseOffering> offerings) {
-        return false;
+    public boolean selectOfferings(Student student, ArrayList<CourseOfferingRequest> requests) {
+        StudentSemester studentSemester = student.getCurrentSemester();
+        RegistrationValidation registrationValidation = studentSemester.getRegistrationValidation();
+        ArrayList<CourseOffering> offerings = new ArrayList<>();
+        for (CourseOfferingRequest request: requests) {
+            if (request.action == CourseOfferingAction.ENROLL || request.action == CourseOfferingAction.NONE) {
+                offerings.add(request.getCourseOffering());
+            }
+        }
+        boolean isValid = registrationValidation.validate(offerings);
+        if (!isValid) {
+            System.out.println(registrationValidation.getErrorMessage());
+            return false;
+        }
+        for (CourseOfferingRequest request: requests) {
+            CourseOffering offering = request.getCourseOffering();
+            if (request.getAction() == CourseOfferingAction.DELETE) {
+                try {
+                    student.unenroll(offering);
+                } catch (InvalidObjectException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            if (request.getAction() == CourseOfferingAction.ENROLL) {
+                try {
+                    student.enroll(offering);
+                } catch (InvalidObjectException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            if (request.getAction() == CourseOfferingAction.WAITING) {
+                student.addToWaitingList(offering);
+            }
+        }
+        return true;
     }
 }

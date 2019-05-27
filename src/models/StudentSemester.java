@@ -1,5 +1,6 @@
 package models;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,6 +9,8 @@ public class StudentSemester extends Entity {
     private Date editingStartTime;
     private ArrayList<Enrollment> enrollments = new ArrayList<>();
     private Semester semester;
+    private SemesterState semesterState;
+    private RegistrationValidation registrationValidation;
 
     public StudentSemester(int id) {
         super(id);
@@ -41,7 +44,7 @@ public class StudentSemester extends Entity {
         return result;
     }
 
-    public float getGPA() throws IllegalStateException{
+    public float getGPA() throws IllegalStateException {
         int sumCredits = 0;
         float sum = 0;
         for (Enrollment enrollment : enrollments) {
@@ -59,4 +62,24 @@ public class StudentSemester extends Entity {
         return sum / sumCredits;
     }
 
+    public RegistrationValidation getRegistrationValidation() {
+        return registrationValidation;
+    }
+
+    public void addEnrollment(Enrollment enrollment) {
+        enrollments.add(enrollment);
+    }
+
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollments.remove(enrollment);
+    }
+
+    public Enrollment getEnrollment(CourseOffering offering) throws InvalidObjectException {
+        for (Enrollment enrollment: enrollments) {
+            if (enrollment.getCourseOffering().equals(offering)) {
+                return enrollment;
+            }
+        }
+        throw new InvalidObjectException("There no such enrollment with specified offering");
+    }
 }

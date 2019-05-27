@@ -6,12 +6,13 @@ import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public abstract class Repository<T extends Entity> {
+public class Repository<T extends Entity> {
     protected ArrayList<T> records;
     private int currentID;
 
     public Repository() {
         records = new ArrayList<>();
+        currentID = 0;
     }
 
     public T find(int id) {
@@ -44,5 +45,9 @@ public abstract class Repository<T extends Entity> {
         }
         newRecord.setId(nextID());
         records.add(newRecord);
+    }
+
+    public void remove(T record) {
+        records.remove(record);
     }
 }

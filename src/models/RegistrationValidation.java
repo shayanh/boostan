@@ -11,9 +11,10 @@ public abstract class RegistrationValidation {
         this.student = student;
     }
 
-    boolean validate(ArrayList<CourseOffering> offerings) {
+    public boolean validate(ArrayList<CourseOffering> offerings) {
         this.offerings = offerings;
-        return checkCapacity() && checkPrerequisites();
+        return checkCapacity() && checkPrerequisites() && checkTimeOverlap()
+                && checkDuplicateCourse() && checkInternship() && checkMinMaxCredit();
     }
 
     protected int getOfferingCreditSum() throws IllegalArgumentException {
@@ -27,7 +28,7 @@ public abstract class RegistrationValidation {
         return credits;
     }
 
-    boolean checkCapacity() {
+    protected boolean checkCapacity() {
         for (CourseOffering offering : offerings) {
             if (!offering.hasCapacity()) {
                 errorMessage = "capacity exceeded";
@@ -37,7 +38,7 @@ public abstract class RegistrationValidation {
         return true;
     }
 
-    boolean checkPrerequisites() {
+    protected boolean checkPrerequisites() {
         Curriculum curriculum = student.getCurriculum();
         for (CourseOffering offering : offerings) {
             Course course = offering.getCourse();
@@ -49,7 +50,7 @@ public abstract class RegistrationValidation {
         return true;
     }
 
-    boolean checkTimeOverlap() {
+    protected boolean checkTimeOverlap() {
         for (CourseOffering offering : offerings) {
             for (CourseOffering offering1 : offerings) {
                 for (ExamSession session : offering.getExamSessions()) {
@@ -71,7 +72,7 @@ public abstract class RegistrationValidation {
         return true;
     }
 
-    boolean checkRepeatitiveCourse() {
+    protected boolean checkDuplicateCourse() {
         for (CourseOffering offering : offerings)
             if (student.hasPassedCourse(offering.getCourse())) {
                 errorMessage = "course is already passed";
@@ -80,7 +81,7 @@ public abstract class RegistrationValidation {
         return true;
     }
 
-    boolean checkInternship() {
+    protected boolean checkInternship() {
         boolean hasInternship = false;
         for (CourseOffering offering : offerings) {
             if (offering.getCourse().isInternship())
@@ -93,6 +94,9 @@ public abstract class RegistrationValidation {
         return true;
     }
 
-    abstract boolean minMaxCredit();
+    abstract boolean checkMinMaxCredit();
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }

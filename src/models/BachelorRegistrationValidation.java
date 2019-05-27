@@ -7,9 +7,8 @@ public class BachelorRegistrationValidation extends RegistrationValidation {
         super(student);
     }
 
-
     @Override
-    boolean minMaxCredit() {
+    boolean checkMinMaxCredit() {
         try {
             int credits = getOfferingCreditSum();
             StudentSemester studentSemester = student.getLastFinishedSemester();

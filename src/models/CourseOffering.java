@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public class CourseOffering {
+public class CourseOffering extends Entity {
     private int capacity;
     private boolean offeredOutside;
     private ArrayList<ExamSession> examSessions;
@@ -27,5 +27,13 @@ public class CourseOffering {
 
     public ArrayList<ExamSession> getExamSessions() {
         return examSessions;
+    }
+
+    public void addEnrollment(Enrollment enrollment) {
+        enrollments.add(enrollment);
+    }
+
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollments.remove(enrollment);
     }
 }

@@ -3,6 +3,8 @@ package models;
 public abstract class Entity {
     private Integer id;
 
+    public Entity() {}
+
     public Entity(int id) {
         this.id = id;
     }
