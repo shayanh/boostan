@@ -11,6 +11,7 @@ public abstract class Repository<T extends Entity> {
     private int currentID;
 
     public Repository() {
+        records = new ArrayList<>();
     }
 
     public T find(int id) {
