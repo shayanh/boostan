@@ -1,4 +1,4 @@
-package respository;
+package respositories;
 
 import models.Major;
 

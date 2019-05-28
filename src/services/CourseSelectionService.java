@@ -1,7 +1,7 @@
 package services;
 
 import models.*;
-import respository.SemesterRepository;
+import respositories.SemesterRepository;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;

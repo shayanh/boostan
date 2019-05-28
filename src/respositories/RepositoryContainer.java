@@ -1,4 +1,4 @@
-package respository;
+package respositories;
 
 public class RepositoryContainer {
     public final static CourseRepository courseRepository = new CourseRepository();
