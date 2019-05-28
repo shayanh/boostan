@@ -59,7 +59,7 @@ class Boostan {
             Curriculum curriculum = new Curriculum(major.getId(), boxes, prerequisites, semester.getId());
             RepositoryContainer.curriculumRepository.insert(curriculum);
 
-            Person person = new Person("navid", "danesh", "002***1500");
+            Person person = new Person("navid", "danesh", "0021231500");
             Student student = new Student("810194534", person, major.getId(), curriculum.getId());
             RepositoryContainer.studentRepository.insert(student);
 
@@ -82,7 +82,5 @@ class Boostan {
         } catch (InvalidObjectException e) {
             e.printStackTrace();
         }
-
-
     }
 }

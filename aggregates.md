@@ -24,3 +24,5 @@ CurriculumRow
 * **Degree**
 
 * **Professor**
+
+* **Person**

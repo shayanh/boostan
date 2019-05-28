@@ -3,7 +3,7 @@ package models;
 import java.util.Map;
 
 public class Enrollment extends Entity {
-    private int grade;
+    private float grade;
     private EnrollmentState state;
     private CourseOffering courseOffering;
     private CurriculumRow curriculumRow;
@@ -19,7 +19,7 @@ public class Enrollment extends Entity {
         this.curriculumRow = curriculumRow;
     }
 
-    public int getGrade() {
+    public float getGrade() {
         return grade;
     }
 
@@ -35,7 +35,7 @@ public class Enrollment extends Entity {
         return curriculumRow;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(float grade) {
         this.grade = grade;
     }
 

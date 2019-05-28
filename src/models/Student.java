@@ -73,7 +73,8 @@ public class Student extends Entity {
     public void unenroll(CourseOffering offering) throws InvalidObjectException {
         StudentSemester studentSemester = this.getCurrentSemester();
         Enrollment enrollment = studentSemester.getEnrollment(offering);
-        RepositoryContainer.semesterRepository.removeEnrollment(studentSemester, enrollment, offering);
+        studentSemester.removeEnrollment(enrollment);
+        RepositoryContainer.semesterRepository.removeEnrollment(enrollment, offering);
     }
 
     public StudentSemester createSemester() throws InvalidObjectException {

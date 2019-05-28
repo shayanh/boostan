@@ -11,6 +11,9 @@ public abstract class RegistrationValidation {
 
     public RegistrationValidation(Student student) {
         this.student = student;
+        enrollOfferings = new ArrayList<>();
+        waitingOfferings = new ArrayList<>();
+        offerings = new ArrayList<>();
     }
 
     public boolean validate(ArrayList<CourseOffering> enrollOfferings, ArrayList<CourseOffering> waitingOfferings) {

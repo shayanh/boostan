@@ -74,13 +74,15 @@ CourseOffering "1" -- "*" Session
 CourseOffering "*" -- "*" Professor
 CourseOffering "*" -- "1" Course
 CourseOffering "*" -- "1" Semester
+CourseOffering "1" -- "*" Student
 
 class Semester << entity >> {
-    registerationPeriod: TimeSpan
-    editingPeriod: TimeSpan
-    eliminationPeriod: TimeSpan
+    registerationPeriod: DateTimePeriod
+    editingPeriod: DateTimePeriod
+    eliminationPeriod: DateTimePeriod
     year: int
     time: SemesterTime
+    finished: Boolean
 }
 
 enum SemesterTime {
@@ -109,7 +111,6 @@ CurriculumBox "*" -- "1" Curriculum
 CurriculumRow "*" -- "1" CurriculumBox
 
 abstract class CurriculumRow << value object >> {
-    isPassed()
 }
 
 CurriculumRow "1" -- "*" Credit
@@ -125,7 +126,7 @@ class AnyCourse {
 }
 
 class Credit << value object >> {
-    credit: Integer
+    credit: Float
     type: CreditType
 }
 
@@ -157,11 +158,8 @@ class MinCreditPrerequisite {
 }
 
 class Enrollment << entity >> {
-    grade: Integer
+    grade: Float
     state: EnrollmentState
-    verifyGrade()
-    finalizeGrade()
-    eliminate()
 }
 
 enum EnrollmentState {
@@ -181,13 +179,20 @@ Enrollment "*" -- "1" StudentSemester
 class StudentSemester << entity >> {
     registerStartTime: Date
     editingStartTime: Date
-    submit()
-    finalize()
+    semesterState: SemesterState
 }
 StudentSemester "*" -- "1" Semester
 StudentSemester "*" -- "1" Student
 StudentSemester "1" -- "1" RegistrationValidationStrategy
 StudentSemester "1" -- "1" EliminationMinCreditStrategy
+
+enum SemesterState {
+    REGISTERED
+    ELIMINATED
+    LEAVED
+    FAILED
+    FINISHED
+}
 
 class TimePeriod << value object >> {
     start: Time
@@ -198,14 +203,6 @@ class DateTimePeriod << value object >> {
     start: Date
     finish: Date
 }
-
-class SemesterTranscript << entity >> {
-}
-SemesterTranscript "1" -- "1" StudentSemester
-
-class Transcript << entity >> {
-}
-Transcript "1" -- "1" Student
 
 class EnrollmentPermission << entity >> {
     type: EnrollmentPermissionType
@@ -222,27 +219,22 @@ enum EnrollmentPermissionType {
     INTERNSHIP_OVERLAP
 }
 
-class RegistrationValidationStrategy {
+abstract class RegistrationValidation {
+    errorMessage: String
+    validate()
 }
 
-RegistrationValidationStrategy <|-- BachelorRegistrationStrategy
-class BachelorRegistrationStrategy {
-}
+RegistrationValidation <|-- BachelorRegistrationValidation
+RegistrationValidation <|-- MasterRegistrationValidation
+RegistrationValidation <|-- PhDRegistrationValidation
 
-RegistrationValidationStrategy <|-- MasterRegistrationStrategy
-class MasterRegistrationStrategy {
+abstract class EliminationValidation {
+    errorMessage: String
+    validate()
 }
-
-RegistrationValidationStrategy <|-- PhDRegistrationStrategy
-class PhDRegistrationStrategy {
-}
-
-interface EliminationMinCreditStrategy {
-    getMinCredit()
-}
-EliminationMinCreditStrategy <|-- BachelorEliminationMinCredit
-EliminationMinCreditStrategy <|-- BachelorShahedEliminationMinCredit
-EliminationMinCreditStrategy <|-- MasterEliminationMinCredit
-EliminationMinCreditStrategy <|-- PhDEliminationMinCredit
+EliminationValidation <|-- BachelorEliminationValidation
+EliminationValidation <|-- BachelorShahedEliminationValidation
+EliminationValidation <|-- MasterEliminationValidation
+EliminationValidation <|-- PhDEliminationValidation
 
 @enduml

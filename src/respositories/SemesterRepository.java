@@ -35,8 +35,7 @@ public class SemesterRepository extends Repository<Semester> {
         offering.addEnrollment(enrollment);
     }
 
-    public void removeEnrollment(StudentSemester studentSemester, Enrollment enrollment, CourseOffering offering) throws InvalidObjectException {
-        studentSemester.removeEnrollment(enrollment);
+    public void removeEnrollment(Enrollment enrollment, CourseOffering offering) throws InvalidObjectException {
         enrollments.remove(enrollment);
         offering.removeEnrollment(enrollment);
     }
