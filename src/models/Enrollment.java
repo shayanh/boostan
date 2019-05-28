@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Map;
+
 public class Enrollment extends Entity {
     private int grade;
     private EnrollmentState state;
@@ -39,5 +41,10 @@ public class Enrollment extends Entity {
 
     public void setState(EnrollmentState state) {
         this.state = state;
+    }
+
+    public boolean canWEliminate() {
+        Map<CreditType, Float> credits = this.curriculumRow.getCredits();
+        return credits.get(CreditType.PRACTICE) != null && credits.get(CreditType.PRACTICE) > 0;
     }
 }

@@ -20,8 +20,14 @@ public abstract class EliminationValidation {
         return credits;
     }
 
-    public boolean validate(ArrayList<Enrollment> enrollments) {
-        this.enrollments = enrollments;
+    public boolean validate(Enrollment eliminatedEnrollment) {
+        StudentSemester studentSemester = student.getCurrentSemester();
+        if (studentSemester.iswEliminated() || !eliminatedEnrollment.canWEliminate()) {
+            return false;
+        }
+        ArrayList<Enrollment> tempEnrollments = studentSemester.getEnrollments();
+        tempEnrollments.remove(eliminatedEnrollment);
+        this.enrollments = tempEnrollments;
         return this.checkMinCredit();
     }
 

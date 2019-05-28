@@ -75,14 +75,7 @@ public class CourseSelectionService {
     public boolean wEliminate(Student student, Enrollment enrollment) {
         StudentSemester studentSemester = student.getCurrentSemester();
         EliminationValidation eliminationValidation = studentSemester.getEliminationValidation();
-
-        if (studentSemester.iswEliminated()) {
-            return false;
-        }
-        ArrayList<Enrollment> tempEnrollments = studentSemester.getEnrollments();
-        tempEnrollments.remove(enrollment);
-
-        if (!eliminationValidation.validate(tempEnrollments)) {
+        if (!eliminationValidation.validate(enrollment)) {
             System.out.println(eliminationValidation.getErrorMessage());
             return false;
         }
