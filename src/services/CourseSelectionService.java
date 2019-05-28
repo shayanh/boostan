@@ -1,21 +1,16 @@
 package services;
 
 import models.*;
+import respositories.RepositoryContainer;
 import respositories.SemesterRepository;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
 public class CourseSelectionService {
-    private SemesterRepository semesterRepository;
-
-    CourseSelectionService() {
-        semesterRepository = new SemesterRepository();
-    }
-
     public ArrayList<CourseOffering> getOfferings(Student student) {
         Curriculum curriculum = student.getCurriculum();
-        Semester semester = semesterRepository.getCurrentSemester();
+        Semester semester = RepositoryContainer.semesterRepository.getCurrentSemester();
         ArrayList<CourseOffering> allOfferings = semester.getCourseOfferings();
         ArrayList<CourseOffering> result = new ArrayList<>();
         for (CourseOffering offering: allOfferings) {

@@ -4,17 +4,17 @@ public class Course extends Entity {
     private String name;
     private boolean isInternship;
 
-    public Course(int id, String name, boolean isInternship) {
-        super(id);
+    public Course(String name, boolean isInternship) {
         this.name = name;
         this.isInternship = isInternship;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isInternship() {
         return isInternship;
     }
 
-    public Course(int id) {
-        super(id);
-    }
 }

@@ -1,11 +1,21 @@
 package models;
 
+import java.util.ArrayList;
+
 public abstract class Prerequisite {
-    private Course targetCourse;
+    protected Course targetCourse;
+
+    public Prerequisite(Course targetCourse) {
+        this.targetCourse = targetCourse;
+    }
 
     public Course getTargetCourse() {
         return targetCourse;
     }
 
-    abstract boolean isSatisfied(Student student);
+    abstract public boolean isSatisfied(Student student);
+
+    public boolean isSatisfied(Student student, ArrayList<CourseOffering> offerings) {
+        return isSatisfied(student);
+    }
 }

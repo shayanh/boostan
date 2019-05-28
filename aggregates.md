@@ -2,11 +2,11 @@
 
 * **Student** (root)  
 StudentSemester  
-Enrollment  
-EnrollmentPermission
 
 * **Semester**  
 CourseOffering  
+Enrollment  
+EnrollmentPermission
 Session  
 ExamSession  
 

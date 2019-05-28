@@ -6,6 +6,10 @@ public class CurriculumBox {
     private CurriculumBoxPassingStrategy passingStrategy;
     private ArrayList<CurriculumRow> rows;
 
+    public CurriculumBox(ArrayList<CurriculumRow> rows) {
+        this.rows = rows;
+    }
+
     boolean hasCourse(Course course) {
         for (CurriculumRow row : rows) {
             if (row instanceof SpecificCourse &&

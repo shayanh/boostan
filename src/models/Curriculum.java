@@ -3,13 +3,16 @@ package models;
 import java.util.ArrayList;
 
 public class Curriculum extends Entity {
-    private Major major;
+    private Integer majorID;
     private ArrayList<CurriculumBox> boxes;
     private ArrayList<Prerequisite> prerequisites = new ArrayList<>();
-    private Semester semester;
+    private Integer semesterID;
 
-    public Curriculum(int id) {
-        super(id);
+    public Curriculum(Integer majorID, ArrayList<CurriculumBox> boxes, ArrayList<Prerequisite> prerequisites, Integer semesterID) {
+        this.majorID = majorID;
+        this.boxes = boxes;
+        this.prerequisites = prerequisites;
+        this.semesterID = semesterID;
     }
 
     public boolean hasCourse(Course course) {
@@ -33,6 +36,15 @@ public class Curriculum extends Entity {
     public boolean isPrerequisiteSatisfied(Student student, Course course) {
         for (Prerequisite prerequisite: prerequisites) {
             if (prerequisite.getTargetCourse().equals(course) && !prerequisite.isSatisfied(student)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isPrerequisiteSatisfied(Student student, Course course, ArrayList<CourseOffering> selectedOffers) {
+        for (Prerequisite prerequisite : prerequisites) {
+            if (prerequisite.getTargetCourse().equals(course) && !prerequisite.isSatisfied(student, selectedOffers)) {
                 return false;
             }
         }

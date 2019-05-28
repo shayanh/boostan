@@ -5,7 +5,9 @@ public class Person extends Entity {
     private String lastName;
     private String ssn;
 
-    public Person(int id) {
-        super(id);
+    public Person(String firstName, String lastName, String ssn) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.ssn = ssn;
     }
 }

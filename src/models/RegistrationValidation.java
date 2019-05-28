@@ -47,7 +47,7 @@ public abstract class RegistrationValidation {
         Curriculum curriculum = student.getCurriculum();
         for (CourseOffering offering : offerings) {
             Course course = offering.getCourse();
-            if (!curriculum.isPrerequisiteSatisfied(student, course)) {
+            if (!curriculum.isPrerequisiteSatisfied(student, course, offerings)) {
                 errorMessage = "requisite not satisfied";
                 return false;
             }

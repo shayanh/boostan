@@ -2,10 +2,12 @@ package models;
 
 public class Major extends Entity {
     private String name;
-    private Degree degree;
-    private Faculty faculty;
+    private Integer degreeID;
+    private Integer facultyID;
 
-    public Major(int id) {
-        super(id);
+    public Major(String name, Integer degreeID, Integer facultyID) {
+        this.name = name;
+        this.degreeID = degreeID;
+        this.facultyID = facultyID;
     }
 }

@@ -1,5 +1,7 @@
 package models;
 
+import respositories.RepositoryContainer;
+
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,19 +10,21 @@ public class StudentSemester extends Entity {
     private Date registerStartTime;
     private Date editingStartTime;
     private ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private Semester semester;
+    private Integer semesterID; //
     private SemesterState semesterState;
-    private RegistrationValidation registrationValidation;
+    private RegistrationValidation registrationValidation; //
     private EliminationValidation eliminationValidation;
     private boolean wEliminated;
 
-    public StudentSemester(int id) {
-        super(id);
+    public StudentSemester(Student student) {
+        semesterID = RepositoryContainer.semesterRepository.getCurrentSemester().getId();
+        registrationValidation = new BachelorRegistrationValidation(student);
+        eliminationValidation = new BachelorEliminationValidation();
         wEliminated = false;
     }
 
     public Semester getSemester() {
-        return semester;
+        return RepositoryContainer.semesterRepository.find(semesterID);
     }
 
     public boolean isCoursePassed(Course course) {

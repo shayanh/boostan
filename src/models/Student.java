@@ -8,12 +8,19 @@ import java.util.ArrayList;
 public class Student extends Entity {
     private String studentID;
     private Person person;
-    private Major major;
+    private Integer majorID;
     private ArrayList<StudentSemester> studentSemesters = new ArrayList<>();
-    private Curriculum curriculum;
+    private Integer curriculumID;
 
-    Student(int id) {
+    public Student(int id) {
         super(id);
+    }
+
+    public Student(String studentID, Person person, Integer majorID, Integer curriculumID) {
+        this.studentID = studentID;
+        this.person = person;
+        this.majorID = majorID;
+        this.curriculumID = curriculumID;
     }
 
     public boolean hasPassedCourse(Course course) {
@@ -26,7 +33,7 @@ public class Student extends Entity {
     }
 
     public Curriculum getCurriculum() {
-        return curriculum;
+        return RepositoryContainer.curriculumRepository.find(curriculumID);
     }
 
     public StudentSemester getLastFinishedSemester() {
@@ -59,15 +66,21 @@ public class Student extends Entity {
         CurriculumRow row = this.getCurriculum().getCorrespondingRow(offering.getCourse());
         Enrollment enrollment = new Enrollment(offering, row);
         enrollment.setState(EnrollmentState.REGISTERED);
-        RepositoryContainer.studentRepository.insertEnrollment(this.getCurrentSemester(), enrollment);
+        this.getCurrentSemester().addEnrollment(enrollment);
         RepositoryContainer.semesterRepository.addEnrollment(offering, enrollment);
     }
 
     public void unenroll(CourseOffering offering) throws InvalidObjectException {
         StudentSemester studentSemester = this.getCurrentSemester();
         Enrollment enrollment = studentSemester.getEnrollment(offering);
-        RepositoryContainer.studentRepository.removeEnrollment(studentSemester, enrollment);
-        RepositoryContainer.semesterRepository.removeEnrollment(offering, enrollment);
+        RepositoryContainer.semesterRepository.removeEnrollment(studentSemester, enrollment, offering);
+    }
+
+    public StudentSemester createSemester() throws InvalidObjectException {
+        StudentSemester studentSemester = new StudentSemester(this);
+        RepositoryContainer.studentRepository.insertStudentSemester(studentSemester);
+        studentSemesters.add(studentSemester);
+        return studentSemester;
     }
 
     public void addToWaitingList(CourseOffering offering) {

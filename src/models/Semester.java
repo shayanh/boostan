@@ -11,9 +11,11 @@ public class Semester extends Entity {
     ArrayList<CourseOffering> courseOfferings = new ArrayList<>();
     private boolean finished;
 
-    public Semester(int id) {
-        super(id);
+    public Semester(ArrayList<CourseOffering> courseOfferings) {
+        this.courseOfferings = courseOfferings;
+        finished = false;
     }
+
 
     public boolean isFinished() {
         return finished;
