@@ -35,6 +35,7 @@ Curriculum "1" -- "*" Semester
 class Course << entity >> {
     name: String
 }
+Course "[CreditType]" -- "1" Credit
 
 enum DayOfWeek {
     SAT
@@ -79,7 +80,7 @@ CourseOffering "1" -- "*" Student
 class Semester << entity >> {
     registerationPeriod: DateTimePeriod
     editingPeriod: DateTimePeriod
-    eliminationPeriod: DateTimePeriod
+    withdrawPeriod: DateTimePeriod
     year: int
     time: SemesterTime
     finished: Boolean
@@ -127,7 +128,6 @@ class AnyCourse {
 
 class Credit << value object >> {
     credit: Float
-    type: CreditType
 }
 
 enum CreditType {
@@ -168,8 +168,8 @@ enum EnrollmentState {
     GRADE_VERIFIED
     GRADE_NOT_VERIFIED
     NOT_GRADED
-    W_ELIMINATED
-    X_ELIMINATED
+    WITHDRAWED
+    ELIMINATED
 }
 
 Enrollment "*" -- "1" CourseOffering
@@ -183,8 +183,8 @@ class StudentSemester << entity >> {
 }
 StudentSemester "*" -- "1" Semester
 StudentSemester "*" -- "1" Student
-StudentSemester "1" -- "1" RegistrationValidationStrategy
-StudentSemester "1" -- "1" EliminationMinCreditStrategy
+StudentSemester "1" -- "1" RegistrationValidation
+StudentSemester "1" -- "1" WithdrawValidation
 
 enum SemesterState {
     REGISTERED
@@ -228,13 +228,13 @@ RegistrationValidation <|-- BachelorRegistrationValidation
 RegistrationValidation <|-- MasterRegistrationValidation
 RegistrationValidation <|-- PhDRegistrationValidation
 
-abstract class EliminationValidation {
+abstract class WithdrawValidation {
     errorMessage: String
     validate()
 }
-EliminationValidation <|-- BachelorEliminationValidation
-EliminationValidation <|-- BachelorShahedEliminationValidation
-EliminationValidation <|-- MasterEliminationValidation
-EliminationValidation <|-- PhDEliminationValidation
+WithdrawValidation <|-- BachelorWithdrawValidation
+WithdrawValidation <|-- BachelorShahedWithdrawValidation
+WithdrawValidation <|-- MasterWithdrawValidation
+WithdrawValidation <|-- PhDWithdrawValidation
 
 @enduml
