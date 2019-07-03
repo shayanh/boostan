@@ -5,14 +5,14 @@ StudentSemester
 
 * **Semester**  
 
-
 * **CourseOffering**  
-Enrollment  
-EnrollmentPermission  
-Session  
+Session
 ExamSession  
 
 * **Course**
+
+* **Enrollment**  
+EnrollmentPermission  
 
 * **Curriculum**  
 Prerequisite  

@@ -1,5 +1,6 @@
 package models;
 
+import respositories.Repository;
 import respositories.RepositoryContainer;
 
 import java.io.InvalidObjectException;
@@ -66,15 +67,17 @@ public class Student extends Entity {
         CurriculumRow row = this.getCurriculum().getCorrespondingRow(offering.getCourse());
         Enrollment enrollment = new Enrollment(offering, row);
         enrollment.setState(EnrollmentState.REGISTERED);
+        RepositoryContainer.enrollmentRepository.insert(enrollment);
+        offering.addEnrollment(enrollment);
         this.getCurrentSemester().addEnrollment(enrollment);
-        RepositoryContainer.semesterRepository.addEnrollment(offering, enrollment);
     }
 
     public void unenroll(CourseOffering offering) throws InvalidObjectException {
         StudentSemester studentSemester = this.getCurrentSemester();
         Enrollment enrollment = studentSemester.getEnrollment(offering);
+        offering.removeEnrollment(enrollment);
         studentSemester.removeEnrollment(enrollment);
-        RepositoryContainer.semesterRepository.removeEnrollment(enrollment, offering);
+        RepositoryContainer.enrollmentRepository.remove(enrollment);
     }
 
     public StudentSemester createSemester() throws InvalidObjectException {

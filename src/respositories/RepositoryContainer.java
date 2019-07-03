@@ -9,4 +9,6 @@ public class RepositoryContainer {
     public final static ProfessorRepository professorRepository = new ProfessorRepository();;
     public final static SemesterRepository semesterRepository = new SemesterRepository();;
     public final static StudentRepository studentRepository = new StudentRepository();;
+    public final static CourseOfferingRepository courseOfferingRepository = new CourseOfferingRepository();
+    public final static EnrollmentRepository enrollmentRepository = new EnrollmentRepository();
 }

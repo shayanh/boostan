@@ -1,4 +1,5 @@
 import models.*;
+import respositories.Repository;
 import respositories.RepositoryContainer;
 import services.CourseOfferingAction;
 import services.CourseOfferingRequest;
@@ -32,11 +33,11 @@ class Boostan {
             RepositoryContainer.courseRepository.insert(course3);
 
             CourseOffering offering1 = new CourseOffering(10, new ArrayList<>(), new ArrayList<>(), course1);
-            RepositoryContainer.semesterRepository.addOffering(offering1);
+            RepositoryContainer.courseOfferingRepository.insert(offering1);
             CourseOffering offering2 = new CourseOffering(10, new ArrayList<>(), new ArrayList<>(), course2);
-            RepositoryContainer.semesterRepository.addOffering(offering2);
+            RepositoryContainer.courseOfferingRepository.insert(offering2);
             CourseOffering offering3 = new CourseOffering(10, new ArrayList<>(), new ArrayList<>(), course3);
-            RepositoryContainer.semesterRepository.addOffering(offering3);
+            RepositoryContainer.courseOfferingRepository.insert(offering3);
 
             ArrayList<CourseOffering> offerings = new ArrayList<>();
             offerings.add(offering1);
