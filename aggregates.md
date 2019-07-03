@@ -4,9 +4,11 @@
 StudentSemester  
 
 * **Semester**  
-CourseOffering  
+
+
+* **CourseOffering**  
 Enrollment  
-EnrollmentPermission
+EnrollmentPermission  
 Session  
 ExamSession  
 

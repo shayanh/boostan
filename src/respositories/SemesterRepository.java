@@ -3,7 +3,6 @@ package respositories;
 import models.CourseOffering;
 import models.Enrollment;
 import models.Semester;
-import models.StudentSemester;
 
 import java.io.InvalidObjectException;
 

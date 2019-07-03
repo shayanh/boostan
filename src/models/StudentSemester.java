@@ -10,9 +10,9 @@ public class StudentSemester extends Entity {
     private Date registerStartTime;
     private Date editingStartTime;
     private ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private Integer semesterID; //
+    private Integer semesterID;
     private SemesterState semesterState;
-    private RegistrationValidation registrationValidation; //
+    private RegistrationValidation registrationValidation;
     private EliminationValidation eliminationValidation;
     private boolean wEliminated;
 

@@ -1,3 +1,4 @@
-* Curriculum association with Semester
-* Curriculum association with Student
-* Tak dars
+* aggregates
+* move credits to course
+* rename elimination to withdraw
+* rename getOfferings to getOfferingsFor

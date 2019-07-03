@@ -4,19 +4,18 @@ import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
 public class CourseOffering extends Entity {
-    private int capacity; //
+    private int capacity;
     private boolean offeredOutside;
-    private ArrayList<ExamSession> examSessions; //
+    private ArrayList<ExamSession> examSessions;
     private Faculty faculty;
-    private ArrayList<Session> sessions; //
+    private ArrayList<Session> sessions;
     private ArrayList<Professor> lecturers;
-    private Course course; //
+    private Course course;
 
     private ArrayList<Enrollment> enrollments = new ArrayList<>();
     private Semester semester;
     private ArrayList<Student> waitingList = new ArrayList<>();
     private static int WAITING_LIST_CAPACITY = 10;
-
 
     public CourseOffering(int capacity, ArrayList<ExamSession> examSessions, ArrayList<Session> sessions, Course course) {
         this.capacity = capacity;
