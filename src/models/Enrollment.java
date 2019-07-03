@@ -43,8 +43,13 @@ public class Enrollment extends Entity {
         this.state = state;
     }
 
+    public int getCreditsSum() {
+        return this.getCourseOffering().getCourse().getCreditsSum();
+    }
+
+    // TODO
     public boolean canWithdraw() {
-        Map<CreditType, Float> credits = this.curriculumRow.getCredits();
+        Map<CreditType, Float> credits = this.courseOffering.getCourse().getCredits();
         return credits.get(CreditType.PRACTICE) != null && credits.get(CreditType.PRACTICE) > 0;
     }
 }

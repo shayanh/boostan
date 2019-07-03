@@ -45,7 +45,7 @@ public class StudentSemester extends Entity {
         int result = 0;
         for (Enrollment enrollment : enrollments) {
             if (enrollment.getState() == EnrollmentState.PASSED) {
-                result += enrollment.getCurriculumRow().getCreditsSum();
+                result += enrollment.getCreditsSum();
             }
         }
         return result;
@@ -59,7 +59,7 @@ public class StudentSemester extends Entity {
             if (state == EnrollmentState.PASSED ||
                     state == EnrollmentState.FAILED ||
                     state == EnrollmentState.GRADE_VERIFIED) {
-                int credits = enrollment.getCurriculumRow().getCreditsSum();
+                int credits = enrollment.getCreditsSum();
                 sum += enrollment.getGrade() * credits;
                 sumCredits += credits;
             }

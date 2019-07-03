@@ -30,8 +30,7 @@ public abstract class RegistrationValidation {
         Curriculum curriculum = student.getCurriculum();
         for (CourseOffering offering : offerings) {
             Course course = offering.getCourse();
-            CurriculumRow row = curriculum.getCorrespondingRow(course);
-            credits += row.getCreditsSum();
+            credits += course.getCreditsSum();
         }
         return credits;
     }

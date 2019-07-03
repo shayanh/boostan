@@ -14,8 +14,7 @@ public abstract class WithdrawValidation {
         Curriculum curriculum = student.getCurriculum();
         for (Enrollment enrollment: enrollments) {
             Course course = enrollment.getCourseOffering().getCourse();
-            CurriculumRow row = curriculum.getCorrespondingRow(course);
-            credits += row.getCreditsSum();
+            credits += course.getCreditsSum();
         }
         return credits;
     }

@@ -22,11 +22,13 @@ class Boostan {
             Major major = new Major("Software Engineering", degree.getId(), faculty.getId());
             RepositoryContainer.majorRepository.insert(major);
 
-            Course course1 = new Course("math1", false);
+            HashMap<CreditType, Float> normalCourseCredits = new HashMap<>();
+            normalCourseCredits.put(CreditType.THEORY, 3F);
+            Course course1 = new Course(normalCourseCredits, "math1", false);
             RepositoryContainer.courseRepository.insert(course1);
-            Course course2 = new Course("math2", false);
+            Course course2 = new Course(normalCourseCredits, "math2", false);
             RepositoryContainer.courseRepository.insert(course2);
-            Course course3 = new Course("physics1", false);
+            Course course3 = new Course(normalCourseCredits, "physics1", false);
             RepositoryContainer.courseRepository.insert(course3);
 
             CourseOffering offering1 = new CourseOffering(10, new ArrayList<>(), new ArrayList<>(), course1);
@@ -43,12 +45,9 @@ class Boostan {
             Semester semester = new Semester(offerings);
             RepositoryContainer.semesterRepository.insert(semester);
 
-            HashMap<CreditType, Float> normalCourseCredits = new HashMap<>();
-            normalCourseCredits.put(CreditType.THEORY, 3F);
-
-            CurriculumRow row1 = new SpecificCourse(normalCourseCredits, course1);
-            CurriculumRow row2 = new SpecificCourse(normalCourseCredits, course2);
-            CurriculumRow row3 = new SpecificCourse(normalCourseCredits, course3);
+            CurriculumRow row1 = new SpecificCourse(course1);
+            CurriculumRow row2 = new SpecificCourse(course2);
+            CurriculumRow row3 = new SpecificCourse(course3);
             ArrayList<CurriculumRow> rows = new ArrayList<>(Arrays.asList(row1, row2, row3));
             ArrayList<CurriculumBox> boxes = new ArrayList<>(Collections.singletonList(new CurriculumBox(rows)));
 
