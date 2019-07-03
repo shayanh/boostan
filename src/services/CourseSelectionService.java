@@ -2,13 +2,12 @@ package services;
 
 import models.*;
 import respositories.RepositoryContainer;
-import respositories.SemesterRepository;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
 public class CourseSelectionService {
-    public ArrayList<CourseOffering> getOfferings(Student student) {
+    public ArrayList<CourseOffering> getOfferingsFor(Student student) {
         Curriculum curriculum = student.getCurriculum();
         Semester semester = RepositoryContainer.semesterRepository.getCurrentSemester();
         ArrayList<CourseOffering> allOfferings = semester.getCourseOfferings();
@@ -24,7 +23,7 @@ public class CourseSelectionService {
         return result;
     }
 
-    public boolean selectOfferings(Student student, ArrayList<CourseOfferingRequest> requests) {
+    public boolean selectOfferingsFor(Student student, ArrayList<CourseOfferingRequest> requests) {
         StudentSemester studentSemester = student.getCurrentSemester();
         RegistrationValidation registrationValidation = studentSemester.getRegistrationValidation();
 
@@ -67,11 +66,11 @@ public class CourseSelectionService {
         return true;
     }
 
-    public boolean wEliminate(Student student, Enrollment enrollment) {
+    public boolean withdrawEnrollmentFor(Student student, Enrollment enrollment) {
         StudentSemester studentSemester = student.getCurrentSemester();
-        EliminationValidation eliminationValidation = studentSemester.getEliminationValidation();
-        if (!eliminationValidation.validate(enrollment)) {
-            System.out.println(eliminationValidation.getErrorMessage());
+        WithdrawValidation withdrawValidation = studentSemester.getWithdrawValidation();
+        if (!withdrawValidation.validate(enrollment)) {
+            System.out.println(withdrawValidation.getErrorMessage());
             return false;
         }
 

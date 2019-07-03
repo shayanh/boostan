@@ -1,6 +1,6 @@
 package models;
 
-public class BachelorEliminationValidation extends EliminationValidation {
+public class BachelorWithdrawValidation extends WithdrawValidation {
     @Override
     boolean checkMinCredit() {
         errorMessage = "min credit error";

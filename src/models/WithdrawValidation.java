@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public abstract class EliminationValidation {
+public abstract class WithdrawValidation {
     protected Student student;
     protected ArrayList<Enrollment> enrollments;
     protected String errorMessage;
@@ -20,13 +20,13 @@ public abstract class EliminationValidation {
         return credits;
     }
 
-    public boolean validate(Enrollment eliminatedEnrollment) {
+    public boolean validate(Enrollment withdrawnEnrollment) {
         StudentSemester studentSemester = student.getCurrentSemester();
-        if (studentSemester.iswEliminated() || !eliminatedEnrollment.canWEliminate()) {
+        if (studentSemester.hasWithdrawn() || !withdrawnEnrollment.canWithdraw()) {
             return false;
         }
         ArrayList<Enrollment> tempEnrollments = studentSemester.getEnrollments();
-        tempEnrollments.remove(eliminatedEnrollment);
+        tempEnrollments.remove(withdrawnEnrollment);
         this.enrollments = tempEnrollments;
         return this.checkMinCredit();
     }

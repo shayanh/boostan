@@ -43,7 +43,7 @@ public class Enrollment extends Entity {
         this.state = state;
     }
 
-    public boolean canWEliminate() {
+    public boolean canWithdraw() {
         Map<CreditType, Float> credits = this.curriculumRow.getCredits();
         return credits.get(CreditType.PRACTICE) != null && credits.get(CreditType.PRACTICE) > 0;
     }

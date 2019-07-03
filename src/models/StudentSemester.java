@@ -13,14 +13,14 @@ public class StudentSemester extends Entity {
     private Integer semesterID;
     private SemesterState semesterState;
     private RegistrationValidation registrationValidation;
-    private EliminationValidation eliminationValidation;
-    private boolean wEliminated;
+    private WithdrawValidation withdrawValidation;
+    private boolean hasWithdrawn;
 
     public StudentSemester(Student student) {
         semesterID = RepositoryContainer.semesterRepository.getCurrentSemester().getId();
         registrationValidation = new BachelorRegistrationValidation(student);
-        eliminationValidation = new BachelorEliminationValidation();
-        wEliminated = false;
+        withdrawValidation = new BachelorWithdrawValidation();
+        hasWithdrawn = false;
     }
 
     public Semester getSemester() {
@@ -90,11 +90,11 @@ public class StudentSemester extends Entity {
         throw new InvalidObjectException("There no such enrollment with specified offering");
     }
 
-    public boolean iswEliminated() {
-        return wEliminated;
+    public boolean hasWithdrawn() {
+        return hasWithdrawn;
     }
 
-    public EliminationValidation getEliminationValidation() {
-        return eliminationValidation;
+    public WithdrawValidation getWithdrawValidation() {
+        return withdrawValidation;
     }
 }

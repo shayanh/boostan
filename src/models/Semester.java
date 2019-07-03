@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Semester extends Entity {
     private DateTimePeriod registerationPeriod;
     private DateTimePeriod editingPeriod;
-    private DateTimePeriod eliminationPeriod;
+    private DateTimePeriod withdrawPeriod;
     private int year;
     private SemesterTime time;
     ArrayList<CourseOffering> courseOfferings = new ArrayList<>();

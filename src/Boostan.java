@@ -66,7 +66,7 @@ class Boostan {
             student.createSemester();
 
             CourseSelectionService service = new CourseSelectionService();
-            for (CourseOffering offering: service.getOfferings(student)) {
+            for (CourseOffering offering: service.getOfferingsFor(student)) {
                 System.out.println(offering.getCourse().getName());
             }
 
@@ -77,7 +77,7 @@ class Boostan {
             requests.add(
                     new CourseOfferingRequest(offering2, CourseOfferingAction.ENROLL)
             );
-            service.selectOfferings(student, requests);
+            service.selectOfferingsFor(student, requests);
 
         } catch (InvalidObjectException e) {
             e.printStackTrace();
